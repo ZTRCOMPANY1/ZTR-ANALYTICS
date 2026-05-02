@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZTR Analytics</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">Z</div><div><strong>ZTR Analytics</strong><span>Enterprise Panel</span></div></div>
+      <nav>
+        <button class="nav active" data-tab="dashboard">📊 Dashboard</button>
+        <button class="nav" data-tab="sites">🌐 Sites</button>
+        <button class="nav" data-tab="live">🟢 Tempo real</button>
+        <button class="nav" data-tab="install">⚙️ Instalação</button>
+      </nav>
+      <div class="sidebox">
+        <small>Senha admin</small>
+        <input id="adminPassword" type="password" value="123456" />
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <h1>Servidor de Analytics</h1>
+          <p>Visitas, páginas, sessões e tempo de permanência em tempo real. Pronto para Render/HTTPS.</p>
+        </div>
+        <div class="actions">
+          <select id="siteFilter"></select>
+          <select id="periodFilter"><option value="24h">24h</option><option value="7d">7 dias</option></select>
+          <button onclick="loadDashboard()">Atualizar</button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="tab active">
+        <div class="cards">
+          <div class="card"><span>Pageviews</span><strong id="mPageviews">0</strong></div>
+          <div class="card"><span>Sessões</span><strong id="mSessions">0</strong></div>
+          <div class="card"><span>Visitantes únicos</span><strong id="mVisitors">0</strong></div>
+          <div class="card"><span>Tempo médio</span><strong id="mDuration">0s</strong></div>
+          <div class="card live"><span>Online agora</span><strong id="mLive">0</strong></div>
+        </div>
+
+        <div class="grid two">
+          <div class="panel"><h2>Visitas no período</h2><canvas id="visitsChart"></canvas></div>
+          <div class="panel"><h2>Fontes de tráfego</h2><canvas id="refsChart"></canvas></div>
+        </div>
+
+        <div class="panel"><h2>Páginas mais acessadas</h2><div id="topPages" class="table"></div></div>
+      </section>
+
+      <section id="sites" class="tab">
+        <div class="panel">
+          <h2>Adicionar site</h2>
+          <div class="formrow">
+            <input id="siteName" placeholder="Nome do site, ex: ZTR Company" />
+            <input id="siteDomain" placeholder="Domínio, ex: ztrcompany.site" />
+            <button onclick="addSite()">Adicionar</button>
+          </div>
+        </div>
+        <div class="panel"><h2>Sites cadastrados</h2><div id="sitesList" class="table"></div></div>
+      </section>
+
+      <section id="live" class="tab">
+        <div class="panel"><h2>Visitantes online agora</h2><div id="liveList" class="table"></div></div>
+      </section>
+
+      <section id="install" class="tab">
+        <div class="panel">
+          <h2>Código para colocar no seu site</h2>
+          <p>Crie um site na aba Sites, selecione ele no filtro e copie o código abaixo antes do <code>&lt;/body&gt;</code>.</p>
+          <textarea id="trackerCode" readonly></textarea>
+          <button onclick="copyTracker()">Copiar código</button>
+        </div>
+        <div class="panel danger">
+          <h2>Manutenção</h2>
+          <button onclick="clearData()">Limpar dados de visitas</button>
+          <a class="download" href="#" onclick="exportData(event)">Exportar JSON</a>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ztr-analytics-server
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ADMIN_PASSWORD
+        value: "123456"
+      - key: NODE_VERSION
+        value: "24"
